@@ -145,5 +145,25 @@ class RedisObjectCache_CLI_Commands extends WP_CLI_Command {
         }
 
     }
+    
+    /**
+     * Flush the Redis cache
+     *
+     * ## EXAMPLES
+     *
+     *     wp redis flush-cache
+     *
+     * @subcommand flush-cache
+     */
+    public function flush_cache() {
+        
+        $plugin = $GLOBALS[ 'redisObjectCache' ];
+        $status = $plugin->get_status();
+
+        wp_cache_flush() && $status = __( 'Connected', 'redis-cache' )
+            ? WP_CLI::success( __( 'Redis Cache flushed', 'redis-cache' ) )
+            : WP_CLI::error( __( 'Unknown error. Redis Cache not flushed.', 'redis-cache' ) );
+
+    }
 
 }
